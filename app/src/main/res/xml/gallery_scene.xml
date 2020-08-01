@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetStart="@layout/collection_layout"
+        motion:constraintSetEnd="@+id/end"
+        motion:duration="300">
+
+        <OnSwipe
+            motion:dragDirection="dragUp"
+            motion:touchAnchorId="@+id/collectionRecyclerView"
+            motion:touchAnchorSide="top"
+            motion:maxAcceleration="40"/>
+
+        <KeyFrameSet>
+            <KeyPosition
+                motion:keyPositionType="parentRelative"
+                motion:percentY="1.2"
+                motion:transitionEasing="accelerate"
+                motion:framePosition="50"
+                motion:targetId="@id/gallerySearch"/>
+        </KeyFrameSet>
+
+    </Transition>
+
+<!--    <Transition-->
+<!--        motion:constraintSetStart="@layout/collection_layout"-->
+<!--        motion:constraintSetEnd="@+id/gallery"-->
+<!--        motion:duration="300">-->
+
+<!--        <OnClick-->
+<!--            motion:targetId="@id/galleryRegion"-->
+<!--            motion:clickAction="toggle"/>-->
+
+<!--    </Transition>-->
+
+<!--    <ConstraintSet android:id="@+id/gallery">-->
+
+<!--        <Constraint-->
+<!--            android:id="@+id/galleryFilterOptionsMainContent"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            motion:layout_constraintTop_toBottomOf="@id/galleryRegion"-->
+<!--            android:layout_marginStart="12dp"-->
+<!--            android:layout_marginEnd="12dp"-->
+<!--            android:layout_marginTop="16dp" />-->
+
+<!--    </ConstraintSet>-->
+
+    <ConstraintSet android:id="@+id/end">
+
+        <Constraint
+            android:id="@+id/galleryText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"/>
+
+        <Constraint
+            android:id="@+id/gallerySearch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintStart_toEndOf="@id/galleryText"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp" />
+
+        <Constraint
+            android:id="@+id/galleryRegion"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            motion:layout_constraintBottom_toBottomOf="@id/galleryFiltersBackground"
+            motion:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:alpha="0.0"/>
+
+        <Constraint
+            android:id="@+id/galleryType"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            motion:layout_constraintBottom_toBottomOf="@id/galleryFiltersBackground"
+            motion:layout_constraintStart_toEndOf="@id/galleryRegion"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:alpha="0.0"/>
+
+        <Constraint
+            android:id="@+id/galleryRarity"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            motion:layout_constraintBottom_toBottomOf="@id/galleryFiltersBackground"
+            motion:layout_constraintStart_toEndOf="@id/galleryType"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:alpha="0.0"/>
+
+        <Constraint
+            android:id="@+id/galleryMana"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            motion:layout_constraintBottom_toBottomOf="@id/galleryFiltersBackground"
+            motion:layout_constraintStart_toEndOf="@id/galleryRarity"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:alpha="0.0"/>
+
+        <Constraint
+            android:id="@+id/galleryKeywords"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            motion:layout_constraintBottom_toBottomOf="@id/galleryFiltersBackground"
+            motion:layout_constraintStart_toEndOf="@id/galleryMana"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:alpha="0.0"/>
+
+        <Constraint
+            android:id="@+id/galleryClearFiltersButton"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            motion:layout_constraintBottom_toBottomOf="@id/galleryFiltersBackground"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:alpha="0.0"/>
+
+        <Constraint
+            android:id="@+id/galleryFiltersBackground"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintBottom_toBottomOf="@id/galleryFiltersBackgroundCollapsed" />
+
+        <Constraint
+            android:id="@+id/galleryDragBarView"
+            android:layout_width="28dp"
+            android:layout_height="4dp"
+            motion:layout_constraintBottom_toBottomOf="@id/galleryFiltersBackground"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="8dp"
+            android:alpha="0.0"/>
+
+        <Constraint
+            android:id="@+id/galleryFilterOptionsMainContent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            motion:layout_constraintBottom_toBottomOf="@id/galleryFiltersBackground"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:alpha="0.0"/>
+
+    </ConstraintSet>
+
+</MotionScene>

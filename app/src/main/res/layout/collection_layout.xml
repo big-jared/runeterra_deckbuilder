@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+        <import type="com.jguttromson.runterra_deckmaster.Region"/>
+        <import type="com.jguttromson.runterra_deckmaster.FilterType"/>
+        <variable
+            name="model"
+            type="com.jguttromson.runterra_deckmaster.CollectionViewModel" />
+    </data>
+
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutDescription="@xml/gallery_scene">
+
+        <View
+            android:id="@+id/galleryMainContentBackground"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/gray" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/collectionRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:clipChildren="false"
+            app:cards="@{model.cards}"
+            app:dataLoading="@{model.dataLoading}"
+            app:layout_constraintTop_toBottomOf="@id/galleryFiltersBackground"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <Space
+            android:id="@+id/galleryFiltersBackgroundSpace"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/galleryFiltersBackground"
+            android:layout_marginBottom="15dp" />
+
+        <View
+            android:id="@+id/galleryFiltersBackgroundShadow"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            app:layout_constraintTop_toBottomOf="@id/galleryFiltersBackgroundSpace"
+            android:background="@drawable/bottom_sheet_shadow"/>
+
+        <View
+            android:id="@+id/galleryFiltersBackground"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/galleryClearFiltersButton"
+            android:background="@drawable/rounded_bottom"/>
+
+        <Space
+            android:id="@+id/galleryFiltersBackgroundCollapsedSpace"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/gallerySearch"
+            android:layout_marginTop="16dp" />
+
+        <View
+            android:id="@+id/galleryFiltersBackgroundCollapsed"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/galleryFiltersBackgroundCollapsedSpace"
+            android:background="@color/darkerGray"/>
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:id="@+id/galleryClearFiltersButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/galleryFilterOptionsMainContent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="Clear Filters"
+            android:textColor="@color/colorAccent"
+            android:textSize="12sp"
+            android:onClick="@{() -> model.clearFilters()}" />
+
+        <View
+            android:id="@+id/galleryFilterMainContentBackground"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="@id/galleryFilterOptionsMainContent"
+            app:layout_constraintBottom_toBottomOf="@id/galleryFilterOptionsMainContent"
+            android:background="@color/darkerGray"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/galleryFilterOptionsMainContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/galleryRegion"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginTop="16dp"
+            android:visibility="@{model.enabledFilter == FilterType.Region ? View.VISIBLE : View.GONE}"
+            app:visibilityMode="ignore">
+
+            <com.google.android.flexbox.FlexboxLayout
+                android:id="@+id/galleryRegionsFlexBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:alignContent="flex_start"
+                app:alignItems="flex_start"
+                app:flexWrap="wrap"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    style="@style/chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:onClick="@{() -> model.toggleRegion(Region.Demacia)}"
+                    android:background="@{model.enabledRegions.contains(Region.Demacia) ? @drawable/chip_border_selected : @drawable/chip_border}">
+
+                    <TextView
+                        style="@style/caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Demacia"
+                        android:textColor="@{model.enabledRegions.contains(Region.Demacia) ? @color/colorAccent : @color/lightGray}"/>
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/icon_demacia"
+                        android:layout_marginStart="3dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:onClick="@{() -> model.toggleRegion(Region.Bilgewater)}"
+                    android:background="@{model.enabledRegions.contains(Region.Bilgewater) ? @drawable/chip_border_selected : @drawable/chip_border}">
+
+                    <TextView
+                        style="@style/caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Bilgewater"
+                        android:textColor="@{model.enabledRegions.contains(Region.Bilgewater) ? @color/colorAccent : @color/lightGray}"/>
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/icon_bilgewater"
+                        android:layout_marginStart="3dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:onClick="@{() -> model.toggleRegion(Region.Freljord)}"
+                    android:background="@{model.enabledRegions.contains(Region.Freljord) ? @drawable/chip_border_selected : @drawable/chip_border}">
+
+                    <TextView
+                        style="@style/caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Freljord"
+                        android:textColor="@{model.enabledRegions.contains(Region.Freljord) ? @color/colorAccent : @color/lightGray}"/>
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/icon_freljord"
+                        android:layout_marginStart="3dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:onClick="@{() -> model.toggleRegion(Region.Ionia)}"
+                    android:background="@{model.enabledRegions.contains(Region.Ionia) ? @drawable/chip_border_selected : @drawable/chip_border}">
+
+                    <TextView
+                        style="@style/caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ionia"
+                        android:textColor="@{model.enabledRegions.contains(Region.Ionia) ? @color/colorAccent : @color/lightGray}"/>
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/icon_ionia"
+                        android:layout_marginStart="3dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:onClick="@{() -> model.toggleRegion(Region.Noxus)}"
+                    android:background="@{model.enabledRegions.contains(Region.Noxus) ? @drawable/chip_border_selected : @drawable/chip_border}">
+
+                    <TextView
+                        style="@style/caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Noxus"
+                        android:textColor="@{model.enabledRegions.contains(Region.Noxus) ? @color/colorAccent : @color/lightGray}"/>
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/icon_noxus"
+                        android:layout_marginStart="3dp"/>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    style="@style/chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:onClick="@{() -> model.toggleRegion(Region.ShadowIsles)}"
+                    android:background="@{model.enabledRegions.contains(Region.ShadowIsles) ? @drawable/chip_border_selected : @drawable/chip_border}">
+
+                    <TextView
+                        style="@style/caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Shadow Isles"
+                        android:textColor="@{model.enabledRegions.contains(Region.ShadowIsles) ? @color/colorAccent : @color/lightGray}"/>
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/icon_shadowisles"
+                        android:layout_marginStart="3dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:onClick="@{() -> model.toggleRegion(Region.Zaun)}"
+                    android:background="@{model.enabledRegions.contains(Region.Zaun) ? @drawable/chip_border_selected : @drawable/chip_border}">
+
+                    <TextView
+                        style="@style/caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Piltover Zaun"
+                        android:textColor="@{model.enabledRegions.contains(Region.Zaun) ? @color/colorAccent : @color/lightGray}"/>
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/icon_piltoverzaun"
+                        android:layout_marginStart="3dp"/>
+
+                </LinearLayout>
+
+            </com.google.android.flexbox.FlexboxLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/galleryFiltersBackgroundGray"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@id/galleryRegion"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@color/darkerGray" />
+
+        <LinearLayout
+            android:id="@+id/galleryRegion"
+            style="@style/chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/gallerySearch"
+            android:background="@{model.enabledRegions.size() > 0 ? @drawable/chip_border_selected : @drawable/chip_border}"
+            android:onClick="@{() -> model.toggleFilterType(FilterType.Region)}"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Region"
+                android:textColor="@{model.enabledRegions.size() > 0 ? @color/colorAccent : @color/lightGray}" />
+
+            <TextView
+                style="@style/caption"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="3dp"
+                android:textColor="@{model.enabledRegions.size() > 0 ? @color/colorAccent : @color/lightGray}"
+                android:text="@{model.enabledRegions.size() > 0 ? model.activeRegionsText() : model.activeRegionsText()}"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/galleryType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Type"
+            app:layout_constraintTop_toBottomOf="@id/gallerySearch"
+            app:layout_constraintStart_toEndOf="@id/galleryRegion"
+            style="@style/chip"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"/>
+
+        <TextView
+            android:id="@+id/galleryRarity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rarity"
+            app:layout_constraintTop_toBottomOf="@id/gallerySearch"
+            app:layout_constraintStart_toEndOf="@id/galleryType"
+            style="@style/chip"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"/>
+
+        <TextView
+            android:id="@+id/galleryMana"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mana"
+            app:layout_constraintTop_toBottomOf="@id/gallerySearch"
+            app:layout_constraintStart_toEndOf="@id/galleryRarity"
+            style="@style/chip"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"/>
+
+        <TextView
+            android:id="@+id/galleryKeywords"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Keywords"
+            app:layout_constraintTop_toBottomOf="@id/gallerySearch"
+            app:layout_constraintStart_toEndOf="@id/galleryMana"
+            style="@style/chip"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"/>
+
+        <com.jguttromson.runterra_deckmaster.ScheduleDragBarView
+            android:id="@+id/galleryDragBarView"
+            android:layout_width="28dp"
+            android:layout_height="4dp"
+            app:layout_constraintBottom_toBottomOf="@id/galleryFiltersBackground"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="8dp"/>
+
+        <EditText
+            android:id="@+id/gallerySearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/galleryText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/search_border"
+            android:hint="Search"
+            android:textColorHint="@color/lightGray"
+            android:textColor="@color/lightGray"
+            android:afterTextChanged="@{(editable)->model.search(editable)}"/>
+
+        <TextView
+            android:id="@+id/galleryText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gallery"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            style="@style/title"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"/>
+
+    </androidx.constraintlayout.motion.widget.MotionLayout>
+
+</layout>

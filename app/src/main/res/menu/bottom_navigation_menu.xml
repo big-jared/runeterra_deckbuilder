@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_collections"
+        android:icon="@drawable/round_view_carousel_24"
+        android:title="Collection" />
+    <item
+        android:id="@+id/navigation_best_decks"
+        android:icon="@drawable/round_emoji_events_24"
+        android:title="Best Decks" />
+    <item
+        android:id="@+id/navigation_settings"
+        android:icon="@drawable/round_settings_24"
+        android:title="Settings" />
+</menu>

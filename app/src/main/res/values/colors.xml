@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#333</color>
+    <color name="colorPrimaryDark">#222</color>
+    <color name="colorAccent">#e3b75b</color>
+
+    <color name="white">#fff</color>
+    <color name="lightGray">#999</color>
+    <color name="lighterGray">#bbb</color>
+    <color name="darkGray">#333</color>
+    <color name="darkerGray">#222</color>
+    <color name="gray">#444</color>
+
+
+    <color name="bilgewater">#a1563d</color>
+    <color name="demacia">#e5dabc</color>
+    <color name="Freljord">#afe2f7</color>
+    <color name="Ionia">#ca8fa2</color>
+    <color name="Noxus">#b34f4a</color>
+    <color name="PiltoverZaun">#e1ae62</color>
+    <color name="ShadowIsles">#489e86</color>
+
+    <!-- Transparent shadow colors -->
+    <color name="grayOpacity00">#00222222</color>
+    <color name="grayOpacity05">#05222222</color>
+    <color name="grayOpacity10">#10222222</color>
+    <color name="grayOpacity15">#15222222</color>
+    <color name="grayOpacity20">#20222222</color>
+    <color name="grayOpacity25">#25222222</color>
+    <color name="grayOpacity30">#30222222</color>
+    <color name="grayOpacity35">#35222222</color>
+    <color name="grayOpacity40">#40222222</color>
+    <color name="grayOpacity45">#45222222</color>
+    <color name="grayOpacity50">#50222222</color>
+    <color name="grayOpacity55">#55222222</color>
+
+</resources>

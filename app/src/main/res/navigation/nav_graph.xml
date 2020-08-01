@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/navigation_collections">
+
+    <fragment
+        android:id="@+id/navigation_collections"
+        android:name="com.jguttromson.runterra_deckmaster.CollectionFragment"
+        android:label="Collection"
+        tools:layout="@layout/collection_layout" />
+
+    <fragment
+        android:id="@+id/navigation_best_decks"
+        android:name="com.jguttromson.runterra_deckmaster.BestDecksFragment"
+        android:label="Best Decks"
+        tools:layout="@layout/best_decks_layout"/>
+
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="com.jguttromson.runterra_deckmaster.SettingsFragment"
+        android:label="Settings"
+        tools:layout="@layout/settings_layout"/>
+</navigation>
