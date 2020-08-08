@@ -30,6 +30,9 @@ class CollectionViewModel : ViewModel() {
     private val _enabledRegions = MutableLiveData<MutableList<Region>>().apply { mutableListOf<Region>() }
     val enabledRegions: LiveData<MutableList<Region>> get() { return _enabledRegions }
 
+    private val _enabledTypes = MutableLiveData<MutableList<Type>>().apply { mutableListOf<Type>() }
+    val enabledTypes: LiveData<MutableList<Type>> get() { return _enabledTypes }
+
     private val _enabledFilter = MutableLiveData<FilterType>().apply { value = null }
     val enabledFilter: LiveData<FilterType> get() { return _enabledFilter }
 
@@ -87,6 +90,19 @@ class CollectionViewModel : ViewModel() {
         applyFilters()
     }
 
+    fun toggleType(type: Type) {
+        val enabledTypes = _enabledTypes.value ?: mutableListOf()
+        if (enabledTypes.contains(type)) {
+            enabledTypes.remove(type)
+        } else {
+            enabledTypes.add(type)
+        }
+
+        filters[FilterType.Type] = { card -> enabledTypes.isEmpty() || enabledTypes.contains(card.type) }
+        _enabledTypes.postValue(enabledTypes)
+        applyFilters()
+    }
+
     fun applyFilters() {
         Thread(Runnable {
             val filteredCards = allCards.filter { card -> filters.all { it.value(card) } }
@@ -101,6 +117,14 @@ class CollectionViewModel : ViewModel() {
     }
 
     fun activeRegionsText() = enabledRegions.value?.let {
+        if (it.isNotEmpty()) {
+            "(${it.size})"
+        } else {
+            ""
+        }
+    } ?: ""
+
+    fun activeTypesText() = enabledTypes.value?.let {
         if (it.isNotEmpty()) {
             "(${it.size})"
         } else {

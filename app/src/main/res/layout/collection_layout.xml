@@ -5,6 +5,7 @@
     <data>
         <import type="android.view.View"/>
         <import type="com.jguttromson.runterra_deckmaster.Region"/>
+        <import type="com.jguttromson.runterra_deckmaster.Type"/>
         <import type="com.jguttromson.runterra_deckmaster.FilterType"/>
         <variable
             name="model"
@@ -96,8 +97,7 @@
             app:layout_constraintTop_toBottomOf="@id/galleryRegion"
             android:layout_marginStart="12dp"
             android:layout_marginEnd="12dp"
-            android:layout_marginTop="16dp"
-            android:visibility="@{model.enabledFilter == FilterType.Region ? View.VISIBLE : View.GONE}"
+            android:layout_marginTop="8dp"
             app:visibilityMode="ignore">
 
             <com.google.android.flexbox.FlexboxLayout
@@ -107,7 +107,8 @@
                 app:alignContent="flex_start"
                 app:alignItems="flex_start"
                 app:flexWrap="wrap"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                android:visibility="@{model.enabledFilter == FilterType.Region ? View.VISIBLE : View.GONE}">
 
                 <LinearLayout
                     style="@style/chip"
@@ -273,6 +274,110 @@
 
             </com.google.android.flexbox.FlexboxLayout>
 
+            <com.google.android.flexbox.FlexboxLayout
+                android:id="@+id/galleryTypesFlexBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:alignContent="flex_start"
+                app:alignItems="flex_start"
+                app:flexWrap="wrap"
+                app:layout_constraintTop_toTopOf="parent"
+                android:visibility="@{model.enabledFilter == FilterType.Type ? View.VISIBLE : View.GONE}">
+
+                <LinearLayout
+                    style="@style/chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:onClick="@{() -> model.toggleType(Type.Spell)}"
+                    android:background="@{model.enabledTypes.contains(Type.Spell) ? @drawable/chip_border_selected : @drawable/chip_border}">
+
+                    <TextView
+                        style="@style/caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Spell"
+                        android:textColor="@{model.enabledTypes.contains(Type.Spell) ? @color/colorAccent : @color/lightGray}"/>
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/icon_demacia"
+                        android:layout_marginStart="3dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:onClick="@{() -> model.toggleType(Type.Unit)}"
+                    android:background="@{model.enabledTypes.contains(Type.Unit) ? @drawable/chip_border_selected : @drawable/chip_border}">
+
+                    <TextView
+                        style="@style/caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Unit"
+                        android:textColor="@{model.enabledTypes.contains(Type.Unit) ? @color/colorAccent : @color/lightGray}"/>
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/icon_demacia"
+                        android:layout_marginStart="3dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:onClick="@{() -> model.toggleType(Type.Ability)}"
+                    android:background="@{model.enabledTypes.contains(Type.Ability) ? @drawable/chip_border_selected : @drawable/chip_border}">
+
+                    <TextView
+                        style="@style/caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ability"
+                        android:textColor="@{model.enabledTypes.contains(Type.Ability) ? @color/colorAccent : @color/lightGray}"/>
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/icon_demacia"
+                        android:layout_marginStart="3dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/chip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:onClick="@{() -> model.toggleType(Type.Trap)}"
+                    android:background="@{model.enabledTypes.contains(Type.Trap) ? @drawable/chip_border_selected : @drawable/chip_border}">
+
+                    <TextView
+                        style="@style/caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Trap"
+                        android:textColor="@{model.enabledTypes.contains(Type.Trap) ? @color/colorAccent : @color/lightGray}"/>
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/icon_demacia"
+                        android:layout_marginStart="3dp"/>
+
+                </LinearLayout>
+
+            </com.google.android.flexbox.FlexboxLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <View
@@ -313,49 +418,98 @@
 
         </LinearLayout>
 
-        <TextView
+        <LinearLayout
             android:id="@+id/galleryType"
+            style="@style/chip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Type"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@id/gallerySearch"
             app:layout_constraintStart_toEndOf="@id/galleryRegion"
-            style="@style/chip"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"/>
+            android:background="@{model.enabledTypes.size() > 0 ? @drawable/chip_border_selected : @drawable/chip_border}"
+            android:onClick="@{() -> model.toggleFilterType(FilterType.Type)}"
+            android:orientation="horizontal">
 
-        <TextView
+            <TextView
+                style="@style/caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Type"
+                android:textColor="@{model.enabledTypes.size() > 0 ? @color/colorAccent : @color/lightGray}" />
+
+            <TextView
+                style="@style/caption"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="3dp"
+                android:textColor="@{model.enabledTypes.size() > 0 ? @color/colorAccent : @color/lightGray}"
+                android:text="@{model.enabledTypes.size() > 0 ? model.activeTypesText() : model.activeTypesText()}"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/galleryRarity"
+            style="@style/chip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Rarity"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@id/gallerySearch"
             app:layout_constraintStart_toEndOf="@id/galleryType"
-            style="@style/chip"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"/>
+            android:background="@{model.enabledRegions.size() > 0 ? @drawable/chip_border_selected : @drawable/chip_border}"
+            android:onClick="@{() -> model.toggleFilterType(FilterType.Region)}"
+            android:orientation="horizontal">
 
-        <TextView
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rarity"
+                style="@style/caption" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/galleryMana"
+            style="@style/chip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mana"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@id/gallerySearch"
             app:layout_constraintStart_toEndOf="@id/galleryRarity"
-            style="@style/chip"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"/>
+            android:background="@{model.enabledRegions.size() > 0 ? @drawable/chip_border_selected : @drawable/chip_border}"
+            android:onClick="@{() -> model.toggleFilterType(FilterType.Region)}"
+            android:orientation="horizontal">
 
-        <TextView
+            <TextView
+                style="@style/caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mana" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/galleryKeywords"
+            style="@style/chip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Keywords"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@id/gallerySearch"
             app:layout_constraintStart_toEndOf="@id/galleryMana"
-            style="@style/chip"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"/>
+            android:background="@{model.enabledRegions.size() > 0 ? @drawable/chip_border_selected : @drawable/chip_border}"
+            android:onClick="@{() -> model.toggleFilterType(FilterType.Region)}"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Keywords"
+                style="@style/caption" />
+
+        </LinearLayout>
 
         <com.jguttromson.runterra_deckmaster.ScheduleDragBarView
             android:id="@+id/galleryDragBarView"
