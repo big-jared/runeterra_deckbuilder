@@ -41,23 +41,13 @@ class CollectionViewModel : ViewModel() {
     fun loadCards(resources: Resources) {
         _dataLoading.postValue(true)
         Thread(Runnable {
-            val json = JSONArray(loadData("set1-en_us.json", resources))
-            val cardList = mutableListOf<Card>()
-
-            for (i in 0 until json.length()) {
-                cardList.add(Card(json.getJSONObject(i)))
+            Cards.getCards(resources) {
+                val cardList = it.filter { it.collectible }.toMutableList()
+                cardList.sortBy { it.cost }
+                allCards = cardList
+                _cards.postValue(cardList)
+                _dataLoading.postValue(false)
             }
-
-            val set2Json = JSONArray(loadData("set2-en_us.json", resources))
-
-            for (i in 0 until set2Json.length()) {
-                cardList.add(Card(set2Json.getJSONObject(i)))
-            }
-
-            cardList.sortBy { it.cost }
-            allCards = cardList
-            _cards.postValue(cardList)
-            _dataLoading.postValue(false)
         }).start()
     }
 

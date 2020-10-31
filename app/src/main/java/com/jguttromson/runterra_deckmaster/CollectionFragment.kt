@@ -1,5 +1,6 @@
 package com.jguttromson.runterra_deckmaster
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -28,7 +29,10 @@ class CollectionFragment: Fragment() {
 
     override fun onStart() {
         super.onStart()
-        collectionRecyclerView.adapter = CardsAdapter(Glide.with(this))
+        collectionRecyclerView.adapter = CardsAdapter(Glide.with(this)) {
+            CardActivity.card = it
+            startActivity(Intent(context, CardActivity::class.java))
+        }
         collectionRecyclerView.layoutManager = GridLayoutManager(context, 2)
         collectionViewModel?.loadCards(resources)
     }

@@ -42,6 +42,7 @@ open class Card(jsonObject: JSONObject) {
     val rarity = Rarity.valueOf(jsonObject.getString("rarityRef"))
     val subType = jsonObject.getString("subtype")
     val type = Type.valueOf(jsonObject.getString("type"))
+    val collectible = jsonObject.getString("collectible") == "true"
 
     fun parseRegion(region: String) = when (region) {
         "Ionia" -> Region.Ionia
@@ -66,7 +67,7 @@ open class Card(jsonObject: JSONObject) {
         return keywordList
     }
 
-    fun getColor(context: Context) = when(region) {
+    fun getRegionColor(context: Context) = when(region) {
         Region.Demacia -> context.resources.getColor(R.color.demacia)
         Region.Bilgewater -> context.resources.getColor(R.color.bilgewater)
         Region.Zaun -> context.resources.getColor(R.color.PiltoverZaun)
@@ -75,5 +76,20 @@ open class Card(jsonObject: JSONObject) {
         Region.Ionia -> context.resources.getColor(R.color.Ionia)
         Region.ShadowIsles -> context.resources.getColor(R.color.ShadowIsles)
         else -> Color.GRAY
+    }
+
+    fun getRegionIcon(context: Context) = when(region) {
+        Region.Demacia -> context.resources.getDrawable(R.drawable.icon_demacia)
+        Region.Bilgewater -> context.resources.getDrawable(R.drawable.icon_bilgewater)
+        Region.Zaun -> context.resources.getDrawable(R.drawable.icon_piltoverzaun)
+        Region.Freljord -> context.resources.getDrawable(R.drawable.icon_freljord)
+        Region.Noxus -> context.resources.getDrawable(R.drawable.icon_noxus)
+        Region.Ionia -> context.resources.getDrawable(R.drawable.icon_ionia)
+        Region.ShadowIsles -> context.resources.getDrawable(R.drawable.icon_shadowisles)
+        else -> context.resources.getDrawable(R.drawable.icon_demacia)
+    }
+
+    fun typeIcon(context: Context) = when (type) {
+        else -> null
     }
 }

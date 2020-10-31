@@ -17,7 +17,7 @@ class GradientView: View {
     constructor(context: Context, attrs: AttributeSet): super(context, attrs)
 
     fun init(card: Card) {
-        val color = card.getColor(context)
+        val color = card.getRegionColor(context)
         gradientPaint.apply {
             shader = LinearGradient(0f, 0f, width.toFloat(), 0f, color, Color.TRANSPARENT, Shader.TileMode.MIRROR)
         }

@@ -27,4 +27,9 @@
         app:itemIconTint="@drawable/navbar_color"
         app:itemTextColor="@drawable/navbar_color"/>
 
+    <FrameLayout
+        android:id="@+id/modalLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

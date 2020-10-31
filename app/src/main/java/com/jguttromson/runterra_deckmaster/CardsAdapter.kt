@@ -1,14 +1,9 @@
 package com.jguttromson.runterra_deckmaster
 
-import android.content.ContentResolver
-import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.DataSource
@@ -17,24 +12,23 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import kotlinx.android.synthetic.main.card_layout.view.*
 import kotlinx.android.synthetic.main.card_layout.view.cardImage
 import kotlinx.android.synthetic.main.simple_card_layout.view.*
 
 
-class CardsAdapter(val glide: RequestManager): RecyclerView.Adapter<CardsAdapter.CardViewHolder>() {
+class CardsAdapter(val glide: RequestManager, val cardClickCallback: (Card) -> Unit): RecyclerView.Adapter<CardsAdapter.CardViewHolder>() {
     var cards: List<Card> = emptyList()
     var dataLoading: Boolean = false
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
         return if (!dataLoading) {
             if (cards.isEmpty()) {
-                CardViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.simple_card_layout, parent, false))
+                CardViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.simple_card_layout, parent, false), cardClickCallback)
             } else {
-                CardViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.simple_card_layout, parent, false))
+                CardViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.simple_card_layout, parent, false), cardClickCallback)
             }
         } else {
-            CardViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.loading_layout, parent, false))
+            CardViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.loading_layout, parent, false), cardClickCallback)
         }
     }
 
@@ -48,11 +42,11 @@ class CardsAdapter(val glide: RequestManager): RecyclerView.Adapter<CardsAdapter
         }
     }
 
-    class CardViewHolder(val cardView: View) : RecyclerView.ViewHolder(cardView) {
+    class CardViewHolder(val cardView: View, val cardClickCallback: (Card) -> Unit) : RecyclerView.ViewHolder(cardView) {
 
         fun bind(card: Card?, glide: RequestManager) {
             card?.let {
-                cardView.cardBackgroundLoading.setCardBackgroundColor(card.getColor(cardView.context))
+                cardView.cardBackgroundLoading.setCardBackgroundColor(card.getRegionColor(cardView.context))
                 cardView.cardBackgroundLoading.visibility = View.VISIBLE
                 cardView.cardLoading.visibility = View.VISIBLE
 
@@ -74,6 +68,10 @@ class CardsAdapter(val glide: RequestManager): RecyclerView.Adapter<CardsAdapter
                         }
                     })
                     .into(cardView.cardImage)
+
+                cardView.setOnClickListener {
+                    cardClickCallback(card)
+                }
             }
         }
     }
