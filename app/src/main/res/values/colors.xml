@@ -34,4 +34,5 @@
     <color name="grayOpacity50">#50222222</color>
     <color name="grayOpacity55">#55222222</color>
 
+    <color name="transparent">#00000000</color>
 </resources>

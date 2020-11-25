@@ -19,12 +19,12 @@ enum class Rarity {
 }
 
 enum class Type {
-    Spell, Unit, Ability, Trap
+    Spell, Unit, Ability, Trap, Champion
 }
 
 open class Card(jsonObject: JSONObject) {
 
-    val assocatedCards = jsonObject.getJSONArray("associatedCardRefs")
+    val assocatedCards = jsonObject.getJSONArray("associatedCardRefs").join(",").split(",").map { it.replace("\"", "") }.filter { it.isNotBlank() }
     val cardAsset = jsonObject.getJSONArray("assets").getJSONObject(0).getString("gameAbsolutePath").replace("http://", "https://")
     val cardFullAsset = jsonObject.getJSONArray("assets").getJSONObject(0).getString("fullAbsolutePath").replace("http://", "https://")
     val region = parseRegion(jsonObject.getString("regionRef"))
@@ -87,6 +87,14 @@ open class Card(jsonObject: JSONObject) {
         Region.Ionia -> context.resources.getDrawable(R.drawable.icon_ionia)
         Region.ShadowIsles -> context.resources.getDrawable(R.drawable.icon_shadowisles)
         else -> context.resources.getDrawable(R.drawable.icon_demacia)
+    }
+
+    fun getTypeIcon(context: Context) = when(type) {
+        Type.Ability -> context.resources.getDrawable(R.drawable.icon_demacia)
+        Type.Trap -> context.resources.getDrawable(R.drawable.icon_bilgewater)
+        Type.Unit -> context.resources.getDrawable(R.drawable.icon_bilgewater)
+        Type.Spell -> context.resources.getDrawable(R.drawable.icon_bilgewater)
+        Type.Champion -> context.resources.getDrawable(R.drawable.icon_bilgewater)
     }
 
     fun typeIcon(context: Context) = when (type) {

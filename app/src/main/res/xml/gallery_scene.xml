@@ -57,7 +57,7 @@
             motion:layout_constraintTop_toTopOf="parent"
             motion:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"/>
+            android:layout_marginTop="16dp" />
 
         <Constraint
             android:id="@+id/gallerySearch"
