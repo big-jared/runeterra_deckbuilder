@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/navigation_collections"
-        android:name="com.jguttromson.runterra_deckmaster.CollectionFragment"
+        android:name="com.jguttromson.runterra_deckmaster.DecksFragment"
         android:label="Collection"
         tools:layout="@layout/collection_layout" />
 
     <fragment
         android:id="@+id/navigation_best_decks"
-        android:name="com.jguttromson.runterra_deckmaster.BestDecksFragment"
+        android:name="com.jguttromson.runterra_deckmaster.CollectionFragment"
         android:label="Best Decks"
         tools:layout="@layout/best_decks_layout"/>
 

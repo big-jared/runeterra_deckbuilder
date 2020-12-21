@@ -2,21 +2,17 @@ package com.jguttromson.runterra_deckmaster
 
 import android.content.res.Resources
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.view.View
 import android.widget.LinearLayout
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.tabs.TabLayoutMediator
 import com.jguttromson.runterra_deckmaster.databinding.CardDetailLayoutBinding
 import kotlinx.android.synthetic.main.card_detail_layout.*
@@ -52,9 +48,7 @@ class CardActivity: FragmentActivity() {
             }
         })
 
-        TabLayoutMediator(tab_layout, cardsViewPager) { tab, position ->
-
-        }.attach()
+        TabLayoutMediator(tab_layout, cardsViewPager) { tab, position -> }.attach()
 
         if (card?.assocatedCards.isNullOrEmpty()) {
             tab_layout.visibility = View.GONE
